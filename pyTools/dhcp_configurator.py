@@ -1,4 +1,4 @@
-from Net_tools import netCalc
+from pyLibs.Net_tools import netCalc
 
 nc = netCalc
 class dhcp_conf:
