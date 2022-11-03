@@ -116,12 +116,12 @@ class netCalc:
         npart = 0
         return masc
 
-    def ask_ip(self):
+    def ask_ip(self,mensaje="Quina es la ip? "):
         ip = [0,0,0,0]
         ippart = ""
         i = 0
         npart = 0
-        ipinput = input ("Quina es la ip? ")
+        ipinput = input (mensaje)
         #bucle para guardar la ip en enteros dentro de una lista
         while i <= len(ipinput):
             if i <= len(ipinput)-1:
