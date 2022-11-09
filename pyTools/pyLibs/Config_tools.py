@@ -5,23 +5,31 @@ from datetime import datetime
 from getpass import getuser
 
 class config:
-    def __init__(self,json_path):
-        try:
-            with open(json_path,"r",encoding="UTF-8") as json_file:
-                dict_config = load(json_file)
-        except:
-            messagebox.showerror("Config not found","No se ha encontrado el fitxero de configuración.")
-            with filedialog.askopenfile("r",defaultextension="json") as json_file:
-                dict_config = load(json_file)
+    def __init__(self,json_path=False,**dict_config):
+        if (not(json_path) and not(dict_config)):
+            print("TIO LA CONFIGURACIÓN DE TU PROGRAMA NO ME LA INVENTO")
+        elif (not(dict_config)):
+            try:
+                with open(json_path,"r",encoding="UTF-8") as json_file:
+                    dict_config = load(json_file)
+            except:
+                messagebox.showerror("Config not found","No se ha encontrado el fitxero de configuración.")
+                with filedialog.askopenfile("r",defaultextension="json") as json_file:
+                    dict_config = load(json_file)
         self.user_path = "C:/Users/"+getuser()
+        #self.param = ["program_path"]
+        self.param = []
         #   MODO MANUAL
         #Añade todos los parametros k se deberian encontrar en el json
-        self.program_path = dict_config["program_path"]
+        ##self.program_path = dict_config["program_path"]
         #Añade los nombres de las variables
-        self.param = ["program_path"]
         #   MODO AUTO
-        ##for param in dict_config:
-        ##    exec("self."+param+" = "+dict_config[param])
+        for param in dict_config:
+            self.param.append(param)
+            try:
+                exec("self."+param+" = "+str(dict_config[param]))
+            except SyntaxError:
+                exec("self."+param+" = \""+str(dict_config[param])+"\"")
             
     def __iter__(self):
         """Converteix la clase en un iterable i inicialitza el contador
@@ -49,6 +57,10 @@ class config:
         self.i += 1
         return [key,value]
 
+    def __len__(self):
+        leng = len(self.param)
+        return leng
+            
     def safe_config(self,json_path):
         """Guarda les dades de totes les variables especificades en la llista param definida a __init__() en un fitxer json en la ruta donada.
 

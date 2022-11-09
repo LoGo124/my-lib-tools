@@ -2,7 +2,7 @@ class netCalc:
     def __init__(self):
         return
     
-    def masc2Prefix(self, masc):
+    def masc2Prefix(masc):
         prefix = 0
         npart = 0
         while npart <= 3:
@@ -21,7 +21,7 @@ class netCalc:
             npart += 1
         return prefix
     
-    def Prefix2HostsIMasc(self, Prefix:int):
+    def Prefix2HostsIMasc(Prefix:int):
         nHosts = (2**(32 - Prefix))-2
         l1 = ("255.", "128.", "192.", "224.", "240.", "248.", "252.", "254.")
         #Divido el prefijo entre 8 para saber cuantas secciones de la mascara son 255
@@ -40,7 +40,7 @@ class netCalc:
             mascara = mascara + ("0." * (4 - r1))
         return [nHosts,Prefix]
     
-    def hosts2Prefix(self, hosts:int):
+    def hosts2Prefix(hosts:int):
         return (32 - (len(bin(hosts)) - 2))
 
     def IpMasc2IpxIpb(args, ip, masc):
@@ -95,12 +95,12 @@ class netCalc:
             npart = npart + 1
         return [ipx, ipb]
     
-    def ask_masc(self):
+    def ask_masc(mensaje = "Quina es la masscara? "):
         masc = [0,0,0,0]
         mascpart = ""
         i = 0
         npart = 0
-        mascarainput = input ("Quina es la masscara? ")
+        mascarainput = input (mensaje)
         #bucle para guardar la mascara en enteros dentro de una lista
         while i <= len(mascarainput):
             if i <= len(mascarainput)-1:
@@ -116,7 +116,7 @@ class netCalc:
         npart = 0
         return masc
 
-    def ask_ip(self,mensaje="Quina es la ip? "):
+    def ask_ip(mensaje="Quina es la ip? "):
         ip = [0,0,0,0]
         ippart = ""
         i = 0
